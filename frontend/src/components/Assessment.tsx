@@ -27,7 +27,6 @@ const Assessment = () => {
   const [questions, setQuestions] = useState<Question[]>([])
   const [participantName, setParticipantName] = useState('')
   const [responses, setResponses] = useState<{ [key: number]: Response }>({})
-  const [currentCategory, setCurrentCategory] = useState('')
   const [loading, setLoading] = useState(true)
 
   const categories = [
@@ -53,7 +52,6 @@ const Assessment = () => {
       
       setTeam(teamData)
       setQuestions(questionsData)
-      setCurrentCategory(categories[0].key)
       
       // Initialize responses
       const initialResponses: { [key: number]: Response } = {}
@@ -114,8 +112,8 @@ const Assessment = () => {
     }
   }
 
-  const getCurrentCategoryQuestions = () => {
-    return questions.filter(q => q.category === currentCategory)
+  const getQuestionsByCategory = (category: string) => {
+    return questions.filter(q => q.category === category)
   }
 
   if (loading) {
@@ -148,50 +146,43 @@ const Assessment = () => {
           </div>
         </div>
 
-        <div className="category-tabs">
-          {categories.map(cat => (
-            <button
-              key={cat.key}
-              type="button"
-              className={`tab ${currentCategory === cat.key ? 'active' : ''}`}
-              onClick={() => setCurrentCategory(cat.key)}
-            >
-              {cat.label}
-            </button>
-          ))}
-        </div>
-
-        <div className="questions-section">
-          <h3>{categories.find(c => c.key === currentCategory)?.label}</h3>
-          
-          {getCurrentCategoryQuestions().map((question) => (
-            <div key={question.id} className="question-card">
-              <h4>{question.text}</h4>
+        <div className="all-categories">
+          {categories.map(category => (
+            <div key={category.key} className="category-section">
+              <h3 className="category-title">{category.label}</h3>
               
-              <div className="score-selector">
-                <label>Score (1 = Strongly Disagree, 5 = Strongly Agree):</label>
-                <div className="score-buttons">
-                  {[1, 2, 3, 4, 5].map(score => (
-                    <button
-                      key={score}
-                      type="button"
-                      className={`score-btn ${responses[question.id]?.score === score ? 'active' : ''}`}
-                      onClick={() => handleResponseChange(question.id, 'score', score)}
-                    >
-                      {score}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              
-              <div className="form-group">
-                <label htmlFor={`notes-${question.id}`}>Additional Notes (optional):</label>
-                <textarea
-                  id={`notes-${question.id}`}
-                  value={responses[question.id]?.notes || ''}
-                  onChange={(e) => handleResponseChange(question.id, 'notes', e.target.value)}
-                  placeholder="Any additional thoughts or context..."
-                />
+              <div className="questions-section">
+                {getQuestionsByCategory(category.key).map((question) => (
+                  <div key={question.id} className="question-card">
+                    <h4>{question.text}</h4>
+                    
+                    <div className="score-selector">
+                      <label>Score (1 = Strongly Disagree, 5 = Strongly Agree):</label>
+                      <div className="score-buttons">
+                        {[1, 2, 3, 4, 5].map(score => (
+                          <button
+                            key={score}
+                            type="button"
+                            className={`score-btn ${responses[question.id]?.score === score ? 'active' : ''}`}
+                            onClick={() => handleResponseChange(question.id, 'score', score)}
+                          >
+                            {score}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div className="form-group">
+                      <label htmlFor={`notes-${question.id}`}>Additional Notes (optional):</label>
+                      <textarea
+                        id={`notes-${question.id}`}
+                        value={responses[question.id]?.notes || ''}
+                        onChange={(e) => handleResponseChange(question.id, 'notes', e.target.value)}
+                        placeholder="Any additional thoughts or context..."
+                      />
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           ))}

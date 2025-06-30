@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
+import RadarChart from './RadarChart'
 
 interface TeamResults {
   team_id: number
@@ -73,6 +74,16 @@ const Results = () => {
         </div>
       ) : (
         <>
+          <div className="radar-chart-section">
+            <h3>Team Health Overview</h3>
+            <RadarChart data={{
+              psychological_safety_avg: results.psychological_safety_avg,
+              dependability_avg: results.dependability_avg,
+              structure_clarity_avg: results.structure_clarity_avg,
+              meaning_impact_avg: results.meaning_impact_avg
+            }} />
+          </div>
+
           <div className="results-grid">
             <div className="result-card">
               <h3>Psychological Safety</h3>
