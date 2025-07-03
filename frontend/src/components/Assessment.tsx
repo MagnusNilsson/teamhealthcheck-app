@@ -124,24 +124,44 @@ const Assessment = () => {
     return <div className="error">Team not found</div>
   }
 
+  const totalQuestions = questions.length
+  const completedQuestions = Object.values(responses).filter(response => response.score !== 3).length
+  const progressPercentage = totalQuestions > 0 ? (completedQuestions / totalQuestions) * 100 : 0
+
   return (
     <div className="assessment">
       <div className="assessment-header">
         <h1>Team Health Assessment</h1>
         <h2>{team.name}</h2>
+        <div className="progress-section">
+          <div className="progress-info">
+            <span className="progress-text">Assessment Progress</span>
+            <span className="progress-numbers">{completedQuestions} of {totalQuestions} questions completed</span>
+          </div>
+          <div className="progress-bar">
+            <div 
+              className="progress-fill" 
+              style={{ width: `${progressPercentage}%` }}
+            ></div>
+          </div>
+        </div>
       </div>
 
       <form onSubmit={handleSubmit}>
         <div className="participant-info">
+          <h3>Participant Information</h3>
+          <p className="assessment-instructions">
+            Please provide your name and complete the assessment below. Your responses will remain confidential and will be aggregated with other team members' responses to provide team-level insights.
+          </p>
           <div className="form-group">
-            <label htmlFor="participantName">Your Name</label>
+            <label htmlFor="participantName">Full Name *</label>
             <input
               type="text"
               id="participantName"
               required
               value={participantName}
               onChange={(e) => setParticipantName(e.target.value)}
-              placeholder="Enter your name"
+              placeholder="Enter your full name"
             />
           </div>
         </div>

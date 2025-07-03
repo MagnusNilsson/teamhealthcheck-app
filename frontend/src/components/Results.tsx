@@ -58,10 +58,15 @@ const Results = () => {
   return (
     <div className="results">
       <div className="results-header">
-        <h1>Team Health Results</h1>
+        <h1>Team Health Assessment Report</h1>
         <h2>{results.team_name}</h2>
         <p className="assessment-count">
-          Based on {results.assessment_count} assessment{results.assessment_count !== 1 ? 's' : ''}
+          Analysis based on {results.assessment_count} participant response{results.assessment_count !== 1 ? 's' : ''} 
+          • Generated on {new Date().toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+          })}
         </p>
       </div>
 
@@ -75,7 +80,11 @@ const Results = () => {
       ) : (
         <>
           <div className="radar-chart-section">
-            <h3>Team Health Overview</h3>
+            <h3>Executive Summary: Team Performance Analysis</h3>
+            <p className="chart-description">
+              The radar chart below visualizes your team's performance across the four critical dimensions 
+              of team effectiveness. Each axis represents average scores from participant responses.
+            </p>
             <RadarChart data={{
               psychological_safety_avg: results.psychological_safety_avg,
               dependability_avg: results.dependability_avg,
@@ -93,7 +102,7 @@ const Results = () => {
               <div className="score-label">
                 {getScoreLabel(results.psychological_safety_avg)}
               </div>
-              <p>Team members feel safe to take risks and be vulnerable</p>
+              <p>Measures the team's ability to show vulnerability, take risks, and express ideas without fear of judgment or negative consequences.</p>
             </div>
 
             <div className="result-card">
@@ -104,7 +113,7 @@ const Results = () => {
               <div className="score-label">
                 {getScoreLabel(results.dependability_avg)}
               </div>
-              <p>Team members can count on each other for quality work</p>
+              <p>Evaluates team members' reliability in completing high-quality work on time and following through on commitments.</p>
             </div>
 
             <div className="result-card">
@@ -115,7 +124,7 @@ const Results = () => {
               <div className="score-label">
                 {getScoreLabel(results.structure_clarity_avg)}
               </div>
-              <p>Goals, roles, and execution plans are clear</p>
+              <p>Assesses clarity of goals, roles, and execution plans to ensure everyone understands their responsibilities and objectives.</p>
             </div>
 
             <div className="result-card">
@@ -126,44 +135,47 @@ const Results = () => {
               <div className="score-label">
                 {getScoreLabel(results.meaning_impact_avg)}
               </div>
-              <p>Work has personal meaning and creates positive impact</p>
+              <p>Measures the personal significance of work and team members' understanding of their positive organizational impact.</p>
             </div>
           </div>
 
           <div className="results-actions">
+            <Link to={`/results/${teamId}/details`} className="btn-secondary">
+              View Detailed Analysis
+            </Link>
             <Link to={`/assessment/${teamId}`} className="btn-primary">
-              New Assessment
+              Conduct New Assessment
             </Link>
             <Link to="/teams" className="btn-outline">
-              Back to Teams
+              Return to Dashboard
             </Link>
           </div>
 
           <div className="insights">
-            <h3>Insights & Recommendations</h3>
+            <h3>Professional Recommendations & Action Items</h3>
             <div className="insight-cards">
               {results.psychological_safety_avg < 3 && (
                 <div className="insight-card">
-                  <h4>Improve Psychological Safety</h4>
-                  <p>Consider team building activities, establish ground rules for respectful communication, and encourage vulnerability from leadership.</p>
+                  <h4>Priority: Enhance Psychological Safety</h4>
+                  <p><strong>Recommended Actions:</strong> Implement structured team building exercises, establish explicit communication norms, model vulnerability through leadership behavior, and create safe spaces for risk-taking and mistake acknowledgment.</p>
                 </div>
               )}
               {results.dependability_avg < 3 && (
                 <div className="insight-card">
-                  <h4>Strengthen Dependability</h4>
-                  <p>Focus on clear commitments, regular check-ins, and accountability practices. Ensure team has necessary resources and skills.</p>
+                  <h4>Priority: Strengthen Team Dependability</h4>
+                  <p><strong>Recommended Actions:</strong> Implement clear commitment protocols, establish regular progress check-ins, develop accountability frameworks, and ensure adequate resource allocation and skill development opportunities.</p>
                 </div>
               )}
               {results.structure_clarity_avg < 3 && (
                 <div className="insight-card">
-                  <h4>Enhance Structure & Clarity</h4>
-                  <p>Define clear roles, create visible goals and KPIs, establish regular communication rhythms, and maintain prioritized backlogs.</p>
+                  <h4>Priority: Improve Structure & Clarity</h4>
+                  <p><strong>Recommended Actions:</strong> Define and document clear role definitions, establish visible goal-setting frameworks with measurable KPIs, implement regular communication cadences, and maintain transparent project prioritization systems.</p>
                 </div>
               )}
               {results.meaning_impact_avg < 3 && (
                 <div className="insight-card">
-                  <h4>Increase Meaning & Impact</h4>
-                  <p>Connect work to larger purpose, highlight team achievements, align individual goals with team objectives, and share success stories.</p>
+                  <h4>Priority: Amplify Meaning & Impact</h4>
+                  <p><strong>Recommended Actions:</strong> Connect individual contributions to organizational mission, implement recognition systems for achievements, align personal development goals with team objectives, and regularly communicate success stories and impact metrics.</p>
                 </div>
               )}
             </div>

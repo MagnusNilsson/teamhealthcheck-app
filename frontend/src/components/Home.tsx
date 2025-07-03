@@ -4,32 +4,37 @@ const Home = () => {
   return (
     <div className="home">
       <div className="hero">
-        <h1>Team Health Check</h1>
+        <h1>Professional Team Health Assessment</h1>
         <p>
-          Assess your team's health based on Google's research on successful teams.
-          Evaluate four key areas: Psychological Safety, Dependability, Structure & Clarity, and Meaning & Impact.
+          Evidence-based team evaluation platform built on Google's Project Aristotle research. 
+          Scientifically measure and improve your team's effectiveness across four critical dimensions 
+          proven to drive high-performing teams.
         </p>
-        <Link to="/teams" className="cta-button">
-          Get Started
+        <Link to="/teams" className="btn-primary cta-button">
+          Begin Assessment
         </Link>
       </div>
       
       <div className="features">
         <div className="feature">
+          <div className="feature-icon">🛡️</div>
           <h3>Psychological Safety</h3>
-          <p>Can team members take risks and be vulnerable without feeling insecure or embarrassed?</p>
+          <p>Measures the team's ability to show vulnerability, ask questions, and admit mistakes without fear of negative consequences.</p>
         </div>
         <div className="feature">
+          <div className="feature-icon">⚡</div>
           <h3>Dependability</h3>
-          <p>Can team members count on each other to do high quality work on time?</p>
+          <p>Evaluates team members' reliability in completing quality work on time and following through on commitments.</p>
         </div>
         <div className="feature">
+          <div className="feature-icon">🎯</div>
           <h3>Structure & Clarity</h3>
-          <p>Are goals, roles, and execution plans clear to everyone on the team?</p>
+          <p>Assesses clarity of goals, roles, and execution plans, ensuring everyone understands their responsibilities and objectives.</p>
         </div>
         <div className="feature">
+          <div className="feature-icon">🌟</div>
           <h3>Meaning & Impact</h3>
-          <p>Does the work have personal meaning and create positive impact?</p>
+          <p>Measures the personal significance of work and the team's understanding of their positive impact on the organization.</p>
         </div>
       </div>
     </div>
